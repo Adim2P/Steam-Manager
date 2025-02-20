@@ -1,3 +1,7 @@
+# TODO
+# Implement a catch function when no Steam Directory is placed
+# Implement a user interaction field when program does its function
+
 import os
 import subprocess
 import time
