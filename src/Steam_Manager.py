@@ -1,5 +1,5 @@
 # TODO
-# Implement a catch function when no Steam Directory is placed
+# ~~Implement a catch function when no Steam Directory is placed~~
 # ~~Implement a user interaction field when program does its functions~~
 # ~~Implement a delay message feature??~~
 
@@ -88,9 +88,18 @@ def upgrade_steam():
 
     input("Press any key to exit.")
 
+def get_valid_action():
+    while True:
+        action = input("Do you want to downgrade or upgrade steam? (Enter 'downgrade' or 'upgrade')")
+
+        if action == "downgrade" or action == "upgrade":
+            return action
+        else:
+            print("Invalid Option. Please enter 'downgrade' or 'upgrade'. Try Again")
+
 # Main Menu
 
-action = input("Do you want to downgrade or upgrade Steam? (Enter 'downgrade' or 'upgrade'): ").strip().lower()
+action = get_valid_action()
 
 if action == "downgrade":
     downgrade_steam()
