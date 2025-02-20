@@ -1,8 +1,7 @@
 # TODO
 # Implement a catch function when no Steam Directory is placed
-# Implement a user interaction field when program does its functiona
+# ~~Implement a user interaction field when program does its functions~~
 # ~~Implement a delay message feature??~~
-# Implement a loop variable in the main menu if incorrect option was placed.
 
 import os
 import subprocess
@@ -68,6 +67,8 @@ def downgrade_steam():
     
     print_with_delay("Steam has been downgraded. Restart steam manually.")
 
+    input("Press any key to exit.")
+
 
 # Upgrade Steam
 
@@ -84,6 +85,8 @@ def upgrade_steam():
     subprocess.run([steam_executable])
 
     print_with_delay("Steam will now auto-update to the latest version")
+
+    input("Press any key to exit.")
 
 # Main Menu
 
