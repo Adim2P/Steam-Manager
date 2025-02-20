@@ -1,5 +1,5 @@
 ('E:\\Files\\Personal Files\\Personal Projects\\Steam '
- 'Manager\\build\\Steam_Manager\\PYZ-00.pyz',
+ 'Manager\\src\\build\\Steam_Manager\\PYZ-00.pyz',
  [('_compat_pickle',
    'C:\\Users\\Adim\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_compat_pickle.py',
    'PYMODULE'),
