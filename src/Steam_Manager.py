@@ -2,6 +2,8 @@
 # ~~Implement a catch function when no Steam Directory is placed~~
 # ~~Implement a user interaction field when program does its functions~~
 # ~~Implement a delay message feature??~~
+# ~~Implement a catch function when there's a user input error on main menu~~
+# ~~Implement a default File location check for Steam Directories~~
 
 import os
 import subprocess
@@ -9,22 +11,57 @@ import time
 from tkinter import filedialog
 from tkinter import Tk
 
-def print_with_delay(message, delay=2):
+def print_with_delay(message, delay=1):
     print(message)
     time.sleep(delay)
 
 # Steam Directory Functions
 
+def checkDefaultLocation():
+    defaultPath = "C:/Program Files (x86)/Steam"
+    if os.path.exists(os.path.join(defaultPath, "steam.exe")):
+        return defaultPath
+    return None
+
 def get_steam_directory():
-    root = Tk()
-    root.withdraw()
-    steam_folder = filedialog.askdirectory(title="Select your Steam folder")
-    if steam_folder:
-        print_with_delay(f"Steam folder selected: {steam_folder}")
-        return steam_folder
-    else:
-        print_with_delay("No folder selected. Exiting...")
-        exit()
+    while True:
+
+        steam_folder = checkDefaultLocation()
+
+        if steam_folder:
+            print_with_delay(f"Default Steam folder found: {steam_folder}")
+            return steam_folder
+    
+        root = Tk()
+        root.withdraw()
+        steam_folder = filedialog.askdirectory(title="Select your steam folder")
+
+        if steam_folder:
+            if os.path.exists(os.path.join(steam_folder, "steam.exe")):
+                print_with_delay(f"Steam folder selected: {steam_folder}")
+                return steam_folder
+            else:
+                print_with_delay(f"No steam.exe found in {steam_folder}. Please select a valid Steam file directory.")
+                retry = input("Do you want to try again? (yes/no): ").strip().lower()
+                
+                if retry not in ["yes", "no"]:
+                    print_with_delay("Invalid input. Please enter 'yes' or 'no'.")
+                    continue
+                
+                if retry == "no":
+                    print_with_delay("Exiting...")
+                    exit()
+        else:
+            print_with_delay("No folder selected.")
+            retry = input("Do you want to try again? (yes/no): ")
+
+            if retry not in ["yes", "no"]:
+                print_with_delay("Invalid input. Please enter 'yes' or 'no'.")
+                continue
+
+            if retry == "no":
+                print_with_delay("Exiting...")
+                exit()  
 
 steam_directory = get_steam_directory()
 
