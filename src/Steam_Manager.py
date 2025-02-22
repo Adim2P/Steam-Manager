@@ -4,6 +4,7 @@
 # ~~Implement a delay message feature??~~
 # ~~Implement a catch function when there's a user input error on main menu~~
 # ~~Implement a default File location check for Steam Directories~~
+# ~~Implement a print function when steam.exe is not found in the default directory~~
 
 import os
 import subprocess
@@ -18,12 +19,14 @@ def print_with_delay(message, delay=1):
 # Steam Directory Functions
 
 def checkDefaultLocation():
-    defaultPath = "C:/Program Files (x86)/Steam"
-    if os.path.exists(os.path.join(defaultPath, "steam.exe")):
-        return defaultPath
+    if os.path.exists(os.path.join(defaultSteamPath, "steam.exe")):
+        return defaultSteamPath
     return None
 
 def get_steam_directory():
+
+    defaultNotFound = False
+
     while True:
 
         steam_folder = checkDefaultLocation()
@@ -31,7 +34,11 @@ def get_steam_directory():
         if steam_folder:
             print_with_delay(f"Default Steam folder found: {steam_folder}")
             return steam_folder
-    
+        else:
+            if not defaultNotFound:
+                print_with_delay(f"steam.exe is not found in the default location: {defaultSteamPath}")
+                defaultNotFound = True
+
         root = Tk()
         root.withdraw()
         steam_folder = filedialog.askdirectory(title="Select your steam folder")
@@ -62,14 +69,6 @@ def get_steam_directory():
             if retry == "no":
                 print_with_delay("Exiting...")
                 exit()  
-
-steam_directory = get_steam_directory()
-
-# Directory Paths
-
-steam_executable = os.path.join(steam_directory, "steam.exe")
-cfg_file_path = os.path.join(steam_directory, "steam.cfg")
-steam_args = "-forcesteamupdate -forcepackagedownload -overridepackageurl http://web.archive.org/web/20240308104109if_/media.steampowered.com/client -exitsteam"
 
 # Steam Close Process
 
@@ -106,7 +105,6 @@ def downgrade_steam():
 
     input("Press any key to exit.")
 
-
 # Upgrade Steam
 
 def upgrade_steam():
@@ -134,7 +132,15 @@ def get_valid_action():
         else:
             print("Invalid Option. Please enter 'downgrade' or 'upgrade'. Try Again")
 
-# Main Menu
+# Global Variables
+
+defaultSteamPath = "C:/Program Files (x86)/Steam/appcache"
+steam_directory = get_steam_directory()
+steam_executable = os.path.join(steam_directory, "steam.exe")
+cfg_file_path = os.path.join(steam_directory, "steam.cfg")
+steam_args = "-forcesteamupdate -forcepackagedownload -overridepackageurl http://web.archive.org/web/20240308104109if_/media.steampowered.com/client -exitsteam"
+
+# Main Functions
 
 action = get_valid_action()
 
@@ -144,5 +150,3 @@ elif action == "upgrade":
     upgrade_steam()
 else:
     print_with_delay("Invalid option. Please enter 'downgrade' or 'upgrade'.")
-
-
