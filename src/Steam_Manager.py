@@ -134,7 +134,7 @@ def get_valid_action():
 
 # Global Variables
 
-defaultSteamPath = "C:/Program Files (x86)/Steam/appcache"
+defaultSteamPath = "C:/Program Files (x86)/Steam"
 steam_directory = get_steam_directory()
 steam_executable = os.path.join(steam_directory, "steam.exe")
 cfg_file_path = os.path.join(steam_directory, "steam.cfg")
